@@ -1,16 +1,16 @@
 clf1 = Pipeline(
-    [('PCA',RandomizedPCA(n_components=100)),
+    [('PCA',PCA(n_components=100,svd_solver='randomized')),
      ('CLF',GaussianNB())]
 )
 clf2 = Pipeline(
-    [('PCA',RandomizedPCA(n_components=500)),
+    [('PCA',PCA(n_components=500,svd_solver='randomized')),
      ('CLF',GaussianNB())]
 )
 
 
-from sklearn.cross_validation import cross_val_score
+from sklearn.model_selection import cross_val_score
 # is clf1 better or worse than clf2?
-cv=StratifiedKFold(y,n_folds=10)
+cv=StratifiedKFold(n_splits=10)
 acc1 = cross_val_score(clf1, X, y=y, cv=cv)
 acc2 = cross_val_score(clf2, X, y=y, cv=cv)
 
@@ -24,8 +24,8 @@ e = (1-acc1)-(1-acc2)
 stdtot = np.std(e)
 
 dbar = np.mean(e)
-print 'Range of:', dbar-t*stdtot,dbar+t*stdtot 
-print np.mean(acc1), np.mean(acc2)
+print ('Range of:', dbar-t*stdtot,dbar+t*stdtot )
+print (np.mean(acc1), np.mean(acc2))
 
 
 #===============================
