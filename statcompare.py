@@ -31,3 +31,4 @@ print (np.mean(acc1), np.mean(acc2))
 #===============================
 cm_normalized = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
 plt.imshow(cm_normalized,cmap=plt.get_cmap('Reds'),aspect='auto')
+plt.grid(False)
